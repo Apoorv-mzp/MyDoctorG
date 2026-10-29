@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDoctorG - Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: #07090e; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .bg-slider {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: cover; background-position: center;
+            animation: slideImages 15s infinite ease-in-out;
+            transition: background-image 1s ease-in-out;
+        }
+        @keyframes slideImages {
+            0%, 100% { background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80'); transform: scale(1); }
+            33% { background-image: url('https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80'); transform: scale(1.05); }
+            66% { background-image: url('/Users/apoorvpandey/Desktop/Gemini_Generated_Image_tsy69ftsy69ftsy6.png'); transform: scale(1); }
+        }
+        .bg-overlay { position: fixed; inset: 0; background: rgba(7, 9, 14, 0.85); z-index: -1; backdrop-filter: blur(8px); }
+
+        .glass-card { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-input { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.12); color: white; }
+        .glass-input:focus { border-color: #6366f1; outline: none; }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 flex flex-col justify-between items-center p-4">
+    <div class="bg-slider"></div>
+    <div class="bg-overlay"></div>
+
+    <header class="text-center pt-6"><h1 class="text-3xl font-extrabold bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent"><i class="fa-solid fa-user-doctor mr-2"></i>MyDoctorG</h1><p class="text-xs text-slate-400 uppercase tracking-wide">Healthcare At Your Fingertips</p></header>
+    <main class="w-full max-w-md my-auto"><div class="glass-card rounded-3xl p-6 shadow-2xl">
+        <form id="signup-form" onsubmit="handleSignup(event)" class="space-y-4">
+            <h2 class="text-xl font-bold">Create Account</h2>
+            <div class="grid grid-cols-2 gap-2"><input id="fn" placeholder="First Name" required class="glass-input p-3 rounded-xl text-sm w-full"><input id="ln" placeholder="Last Name" required class="glass-input p-3 rounded-xl text-sm w-full"></div>
+            <input id="email" type="email" placeholder="Email Address" required class="glass-input p-3 rounded-xl text-sm w-full">
+            <input id="phone" type="tel" pattern="\d{10}" maxlength="10" placeholder="Mobile (10 digits)" required class="glass-input p-3 rounded-xl text-sm w-full">
+            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-cyan-500 font-semibold text-sm rounded-xl text-white shadow-lg">Sign Up</button>
+        </form>
+        <div id="success-screen" class="hidden text-center py-6"><i class="fa-solid fa-circle-check text-5xl text-emerald-400 mb-3"></i><h2 class="text-2xl font-bold">Success!</h2><p class="text-sm text-slate-300">Welcome to MyDoctorG, <span id="welcome-name" class="text-emerald-400"></span>!</p></div>
+    </div></main>
+    <footer class="text-xs text-slate-500 py-4">&copy; 2026 MyDoctorG Healthcare Systems.</footer>
+    <script>
+        function handleSignup(e){
+            e.preventDefault();
+            const fn = document.getElementById('fn').value;
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('success-screen').classList.remove('hidden');
+            document.getElementById('welcome-name').innerText = "Dr. " + fn;
+            setTimeout(() => window.location.href = "my-doctor-g/New.html", 1800);
+        }
+    </script>
+</body>
+</html>
+
+
