@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyDoctorG - Signup</title>
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={darkMode:'class'}</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body{font-family:sans-serif;overflow-x:hidden;transition:.3s}.bg-tr{position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200') repeat-y center/cover;animation:tr 25s linear infinite}
+.dark .bg-tr{opacity:1}html:not(.dark) .bg-tr{opacity:.05}@keyframes tr{0%{background-position:center 0}100%{background-position:center -1500px}}
+.ov{position:fixed;inset:0;z-index:-1;backdrop-filter:blur(8px)}.dark .ov{background:rgba(7,9,14,.85)}html:not(.dark) .ov{background:rgba(248,250,252,.85)}
+.train-container{position:fixed;top:0;left:0;width:100%;height:130px;border-bottom:4px solid rgba(56,189,248,.5);z-index:50;overflow:hidden;display:flex;align-items:center}@media(min-width:768px){.train-container{height:200px}}
+.dark .train-container{background:rgba(15,23,42,.96);box-shadow:0 8px 32px rgba(0,0,0,.7)}html:not(.dark) .train-container{background:rgba(255,255,255,.96);box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.train-runner{position:absolute;display:flex;align-items:center;gap:24px;white-space:nowrap;animation:run 25s linear infinite}@media(min-width:768px){.train-runner{gap:36px}}
+@keyframes run{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@keyframes moveLogo{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.moving-image{animation:moveLogo 2.5s ease-in-out infinite}.gt{background:linear-gradient(90deg,#22d3ee,#818cf8,#38bdf8,#22d3ee);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:g 4s linear infinite}
+@keyframes g{0%{background-position:0% 50%}100%{background-position:200% 50%}}.glass-card{backdrop-filter:blur(20px)}
+.dark .glass-card{background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.08)}html:not(.dark) .glass-card{background:rgba(255,255,255,.85);border:1px solid rgba(0,0,0,.08)}
+.dark .glass-input{background:rgba(30,41,59,.6);border:1px solid rgba(255,255,255,.12);color:#fff}html:not(.dark) .glass-input{background:rgba(241,245,249,.8);border:1px solid rgba(203,213,225,.8);color:#0f172a}
+.glass-input:focus{border-color:#6366f1;outline:none}.dark .tip-card{background:rgba(15,23,42,.9);border:1px solid rgba(56,189,248,.4)}html:not(.dark) .tip-card{background:rgba(255,255,255,.95);border:1px solid rgba(14,165,233,.2)}
+</style></head>
+<body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between items-center p-4 pt-36 md:pt-52">
+<div class="bg-tr"></div><div class="ov"></div>
+<div class="train-container">
+  <div class="w-full h-1.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent absolute bottom-0 shadow-lg shadow-cyan-500/50"></div>
+  <div id="trainTrack" class="train-runner flex items-center"></div>
+</div>
+<header class="text-center pt-2 relative w-full max-w-md flex flex-col items-center">
+  <button onclick="document.documentElement.classList.toggle('dark');let isDark=document.documentElement.classList.contains('dark');document.getElementById('themeIcon').className=isDark?'fa-solid fa-sun text-lg text-amber-400':'fa-solid fa-moon text-lg text-indigo-600';" class="absolute -top-3 right-0 md:-right-12 p-2.5 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 shadow-lg flex items-center justify-center w-10 h-10"><i id="themeIcon" class="fa-solid fa-moon text-lg text-indigo-600"></i></button>
+  <h1 class="text-2xl sm:text-3xl font-extrabold flex items-center justify-center gap-2.5"><img src="https://cdn-icons-png.flaticon.com/512/387/387561.png" class="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover border border-cyan-500/40 moving-image"><span class="gt">MyDoctorG</span></h1>
+  <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide mt-1 font-semibold">Healthcare At Your Fingertips</p>
+</header>
+<main class="w-full max-w-md my-auto">
+  <div class="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 relative z-10 shadow-2xl">
+    <form id="signup-form" onsubmit="handleSignup(event)" class="space-y-3.5 md:space-y-4">
+      <h2 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white">Create Account</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <input id="fn" placeholder="First Name" required class="glass-input p-2.5 md:p-3 rounded-xl text-sm w-full">
+        <input id="ln" placeholder="Last Name" required class="glass-input p-2.5 md:p-3 rounded-xl text-sm w-full">
+      </div>
+      <input id="email" type="email" placeholder="Email Address" required class="glass-input p-2.5 md:p-3 rounded-xl text-sm w-full">
+      <div class="relative">
+        <div class="flex items-center glass-input rounded-xl overflow-hidden">
+          <span class="px-3 text-sm text-slate-500 dark:text-slate-400 border-r border-slate-300 dark:border-slate-700/50 bg-slate-200/50 dark:bg-slate-800/50">+91</span>
+          <input id="phone" type="tel" oninput="this.value=this.value.replace(/\D/g,'');let s=document.getElementById('phoneStatus'),m=document.getElementById('phoneMsg');s.classList.remove('hidden');if(this.value.length===10){s.innerHTML='<i class=\'fa-solid fa-circle-check text-emerald-500 text-base\'></i>';m.classList.add('hidden');}else{s.innerHTML='<i class=\'fa-solid fa-circle-xmark text-rose-500 text-base\'></i>';m.classList.remove('hidden');}" maxlength="10" placeholder="Mobile Number (10 digits)" required class="w-full p-2.5 md:p-3 bg-transparent text-sm focus:outline-none">
+        </div>
+        <span id="phoneStatus" class="absolute right-3 top-3 hidden text-xs"></span>
+      </div>
+      <p id="phoneMsg" class="hidden text-[11px] text-rose-500 font-medium px-1 mt-0.5">Please enter a valid 10-digit mobile number.</p>
+      <div class="flex items-center justify-between glass-input p-3 rounded-xl text-sm">
+        <label class="flex items-center gap-2.5 cursor-pointer select-none"><input type="checkbox" id="botCheck" required class="w-4 h-4 accent-cyan-500 rounded"><span>I am human (Anti-bot check)</span></label>
+        <i class="fa-solid fa-shield-halved text-cyan-500 text-lg"></i>
+      </div>
+      <button id="submitBtn" type="submit" class="w-full py-3 md:py-3.5 bg-gradient-to-r from-indigo-600 to-cyan-500 font-semibold text-sm rounded-xl text-white shadow-lg active:scale-95 transition-transform">Complete Signup</button>
+    </form>
+    <div id="success-screen" class="hidden text-center py-6">
+      <i class="fa-solid fa-circle-check text-4xl sm:text-5xl text-emerald-500 mb-3 animate-bounce"></i>
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Success!</h2>
+      <p class="text-sm text-slate-600 dark:text-slate-300">Welcome to MyDoctorG, <span id="welcome-name" class="text-emerald-600 dark:text-emerald-400 font-bold"></span>!</p>
+    </div>
+  </div>
+</main>
+<footer class="text-xs text-slate-500 dark:text-slate-400 py-4 flex flex-col items-center gap-2 text-center">
+  <div class="flex flex-wrap justify-center gap-4 text-slate-600 dark:text-slate-300 font-medium"><a href="mailto:apoorv@mydoctorg.com" class="hover:text-cyan-500"><i class="fa-solid fa-envelope text-cyan-500"></i> Contact Us</a><span>|</span><a href="mailto:apoorv@mydoctorg.com" class="hover:text-cyan-500"><i class="fa-solid fa-laptop-code text-cyan-500"></i> Want a Website?</a></div>
+  <div>&copy; 2026 MyDoctorG Healthcare Systems.</div>
+</footer>
+<script>
+  window.handleSignup = function(e) {
+    e.preventDefault();
+    if(document.getElementById('phone').value.trim().length !== 10) return;
+    if(!document.getElementById('botCheck').checked) { alert("Please confirm you are human."); return; }
+    let btn = document.getElementById('submitBtn'), fn = document.getElementById('fn').value.trim();
+    btn.disabled = true; btn.innerText = "Signing up...";
+    sessionStorage.setItem('mydoctorg_user_email', document.getElementById('email').value.trim());
+    sessionStorage.setItem('mydoctorg_user_name', fn + " " + document.getElementById('ln').value.trim());
+    sessionStorage.setItem('mydoctorg_phone', "+91" + document.getElementById('phone').value.trim());
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('success-screen').classList.remove('hidden');
+    document.getElementById('welcome-name').innerText = "Mr/Mrs. " + fn;
+    if(typeof confetti === 'function') confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+    setTimeout(() => window.location.href = "New.html", 2000);
+  };
+</script>
+<script>
+  const tips=[{i:"fa-droplet",t:"Morning Hydration",d:"Drink 1 glass of warm water after waking up."}, {i:"fa-eye",t:"20-20-20 Eye Rule",d:"Look 20ft away for 20s every 20 minutes."}, {i:"fa-person-walking",t:"Post-Meal Walk",d:"Take a 10-minute walk after lunch & dinner."}, {i:"fa-bed",t:"Digital Detox",d:"Turn off screens 30 mins before sleeping."}, {i:"fa-apple-whole",t:"Mindful Eating",d:"Chew food 20 times for better digestion."}, {i:"fa-child-reaching",t:"Posture Check",d:"Keep shoulders back & spine straight."}];
+  document.getElementById('trainTrack').innerHTML = Array(2).fill(tips.map(x=>`<div class="relative shrink-0 flex items-center gap-3 tip-card p-2.5 md:p-3 rounded-xl md:rounded-2xl shadow-md border border-cyan-500/30"><img src="https://cdn-icons-png.flaticon.com/512/387/387561.png" class="w-16 h-16 md:w-28 md:h-28 rounded-lg md:rounded-xl border border-cyan-400/50 object-cover shrink-0"><div class="flex flex-col justify-center pr-2"><span class="text-[10px] md:text-xs font-semibold text-cyan-600 dark:text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider"><i class="fa-solid ${x.i} text-emerald-500 dark:text-emerald-400"></i> ${x.t}</span><p class="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-100 whitespace-normal max-w-[140px] md:max-w-[200px] leading-snug mt-1">${x.d}</p></div></div>`).join('')).join('');
+</script>
+</body>
+</html>
