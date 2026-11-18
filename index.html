@@ -106,7 +106,7 @@ function togglePwd(){
   e.className = p.type === 'password' ? 'fa-solid fa-eye text-xs' : 'fa-solid fa-eye-slash text-xs';
 }
 
-async function handleSignup(e){
+function handleSignup(e){
   e.preventDefault();
 
   const name = document.getElementById('fullname').value.trim().replace(/\s+/g, ' ');
@@ -155,12 +155,6 @@ async function handleSignup(e){
     return;
   }
 
-  const btn = e.target.querySelector('button[type="submit"]');
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
-  }
-
   const profile = {
     name: name,
     email: email,
@@ -171,17 +165,6 @@ async function handleSignup(e){
     history: history || "None"
   };
   localStorage.setItem('mydoctorg_profile', JSON.stringify(profile));
-
-  try {
-    await fetch('/api/notify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, email: email })
-    });
-  } catch (err) {
-    console.error('Notification error:', err);
-  }
-
   window.location.href = "New.html";
 }
 </script>
