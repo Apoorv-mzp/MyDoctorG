@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyDoctorG — Sign Up</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%23070b14'/%3E%3Cpath d='M15 6H21V15H30V21H21V30H15V21H6V15H15V6Z' fill='%2310b981' fill-opacity='0.25' stroke='%2310b981' stroke-width='2'/%3E%3Cpath d='M8 18.5H13.5L16 13.5L19.5 23L22 18.5H28' stroke='%2334d399' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Plus Jakarta Sans','sans-serif']}}}}</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,6 +22,9 @@ html:not(.dark) .glass{background:rgba(255,255,255,.9);border:1px solid rgba(0,0
 .dark .ibox:focus{border-color:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.18);background:rgba(4,9,23,.9)}
 html:not(.dark) .ibox{background:#f8fafc;border:1px solid #cbd5e1;color:#0f172a}
 html:not(.dark) .ibox:focus{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150,105,.12);background:#fff}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.animate-marquee{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.animate-marquee:hover{animation-play-state:paused}
 </style>
 </head>
 <body class="antialiased text-slate-800 dark:text-slate-100 selection:bg-emerald-500 selection:text-white justify-between">
@@ -28,15 +32,47 @@ html:not(.dark) .ibox:focus{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150
 <header class="sticky top-0 z-40 backdrop-blur-2xl border-b transition dark:bg-slate-950/75 dark:border-slate-800/80 bg-white/75 border-slate-200/80">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/25"><i class="fa-solid fa-heart-pulse"></i></div>
+<div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-0.5 shadow-lg shadow-emerald-500/25">
+  <div class="w-full h-full rounded-[14px] dark:bg-slate-950/90 bg-white flex items-center justify-center">
+    <svg class="w-6 h-6" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 6H21V15H30V21H21V30H15V21H6V15H15V6Z" fill="url(#mdgGrad)" fill-opacity="0.22" stroke="url(#mdgGrad)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8 18.5H13.5L16 13.5L19.5 23L22 18.5H28" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <linearGradient id="mdgGrad" x1="6" y1="6" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#10b981"/>
+          <stop offset="1" stop-color="#22d3ee"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
 <div>
 <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">MyDoctorG</h1>
-<p class="text-[11px] font-bold text-slate-400 dark:text-slate-500 tracking-wider uppercase">Healthcare At Your Fingertips</p>
+<p class="text-[11px] font-bold text-slate-400 dark:text-slate-500 tracking-wider uppercase">Your Digital Health Partner</p>
 </div>
 </div>
 <button onclick="document.documentElement.classList.toggle('dark')" class="w-10 h-10 rounded-xl flex items-center justify-center border transition dark:bg-slate-900 dark:border-slate-700 dark:text-amber-400 bg-slate-100 border-slate-200 text-indigo-600"><i class="fa-solid fa-moon"></i></button>
 </div>
 </header>
+
+<div class="border-b transition dark:bg-[#050914]/90 dark:border-slate-800/80 bg-white/90 border-slate-200 py-2.5 px-4">
+<div class="max-w-7xl mx-auto flex items-center gap-4 overflow-hidden">
+<span class="shrink-0 inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>HEALTH PULSE</span>
+<div class="overflow-hidden flex-1">
+<div class="animate-marquee gap-10 text-xs font-medium dark:text-slate-300 text-slate-700">
+<span class="inline-flex items-center gap-2">🚶‍♂️ A 10-minute post-meal walk helps stabilize blood sugar and improves digestion.</span>
+<span class="inline-flex items-center gap-2">☀️ 15 minutes of morning sunlight before 10 AM boosts natural Vitamin D &amp; sleep quality.</span>
+<span class="inline-flex items-center gap-2">🛡️ Keep your Emergency Medical ID &amp; blood group updated for instant offline access.</span>
+<span class="inline-flex items-center gap-2">💧 Staying hydrated improves focus, circulation, and recovery every 20 seconds.</span>
+<span class="inline-flex items-center gap-2">🚶‍♂️ A 10-minute post-meal walk helps stabilize blood sugar and improves digestion.</span>
+<span class="inline-flex items-center gap-2">☀️ 15 minutes of morning sunlight before 10 AM boosts natural Vitamin D &amp; sleep quality.</span>
+<span class="inline-flex items-center gap-2">🛡️ Keep your Emergency Medical ID &amp; blood group updated for instant offline access.</span>
+<span class="inline-flex items-center gap-2">💧 Staying hydrated improves focus, circulation, and recovery every 20 seconds.</span>
+</div>
+</div>
+</div>
+</div>
+
 <main class="flex-1 max-w-lg mx-auto w-full px-4 py-10 flex items-center justify-center">
 <div class="glass p-8 sm:p-10 w-full space-y-6 border border-emerald-500/20 shadow-2xl">
 <div class="text-center space-y-1">
@@ -92,7 +128,7 @@ html:not(.dark) .ibox:focus{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150
 <input id="signupPassword" type="password" name="password" autocomplete="new-password" placeholder="••••••••" minlength="6" required class="ibox w-full pl-10 pr-12 py-3 rounded-xl text-xs font-medium focus:outline-none" title="Password must be at least 6 characters long">
 <button type="button" onclick="togglePwd()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-emerald-500 transition"><i id="signupEye" class="fa-solid fa-eye text-xs"></i></button></div>
 </div>
-<button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 mt-2"><i class="fa-solid fa-user-plus"></i> Create Account & Proceed</button>
+<button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 mt-2"><i class="fa-solid fa-user-plus"></i> Create Account &amp; Proceed</button>
 </form>
 </div>
 </main>
