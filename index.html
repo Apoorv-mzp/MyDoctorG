@@ -100,13 +100,15 @@ html:not(.dark) .ibox:focus{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150
 <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 font-medium">© 2026 MyDoctorG Healthcare Systems. All rights reserved.</div>
 </footer>
 <script>
+const FORMSPREE_URL = "https://formspree.io/f/mnpddylz";
+
 function togglePwd(){
   const p = document.getElementById('signupPassword'), e = document.getElementById('signupEye');
   p.type = p.type === 'password' ? 'text' : 'password';
   e.className = p.type === 'password' ? 'fa-solid fa-eye text-xs' : 'fa-solid fa-eye-slash text-xs';
 }
 
-function handleSignup(e){
+async function handleSignup(e){
   e.preventDefault();
 
   const name = document.getElementById('fullname').value.trim().replace(/\s+/g, ' ');
@@ -155,6 +157,12 @@ function handleSignup(e){
     return;
   }
 
+  const btn = e.target.querySelector('button[type="submit"]');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Profile...';
+  }
+
   const profile = {
     name: name,
     email: email,
@@ -164,7 +172,26 @@ function handleSignup(e){
     emergency: emergency,
     history: history || "None"
   };
+
   localStorage.setItem('mydoctorg_profile', JSON.stringify(profile));
+
+  try {
+    await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: `New MyDoctorG Signup: ${name}`,
+        ...profile,
+        signedUpAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+      })
+    });
+  } catch (err) {
+    console.error('Formspree DB sync failed:', err);
+  }
+
   window.location.href = "New.html";
 }
 </script>
