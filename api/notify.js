@@ -9,22 +9,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Name and email are required' });
   }
 
-  if (!process.env.RESEND_API_KEY) {
-    return res.status(500).json({ error: 'RESEND_API_KEY is missing in Vercel Environment Variables' });
+  if (!process.env.BREVO_API_KEY) {
+    return res.status(500).json({ error: 'BREVO_API_KEY is missing in Vercel Environment Variables' });
   }
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'api-key': process.env.BREVO_API_KEY,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'MyDoctorG <onboarding@resend.dev>',
-        to: email,
+        sender: { name: 'MyDoctorG', email: 'apoorvpandeymzp63@gmail.com' },
+        to: [{ email: email, name: name }],
         subject: `Welcome to MyDoctorG, ${name}!`,
-        html: `
+        htmlContent: `
           <div style="font-family: sans-serif; padding: 20px; background: #070b14; color: #f8fafc; border-radius: 12px;">
             <h2 style="color: #34d399;">MyDoctorG — AI Health Suite</h2>
             <p>Hello <b>${name}</b>,</p>
@@ -38,10 +38,10 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.message || 'Resend API Error' });
+      return res.status(response.status).json({ error: data.message || 'Brevo API Error' });
     }
 
-    return res.status(200).json({ success: true, id: data.id });
+    return res.status(200).json({ success: true, messageId: data.messageId });
   } catch (error) {
     return res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
