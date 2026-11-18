@@ -101,70 +101,88 @@ html:not(.dark) .ibox:focus{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150
 </footer>
 <script>
 function togglePwd(){
-const p=document.getElementById('signupPassword'),e=document.getElementById('signupEye');
-p.type=p.type==='password'?'text':'password';
-e.className=p.type==='password'?'fa-solid fa-eye text-xs':'fa-solid fa-eye-slash text-xs';
+  const p = document.getElementById('signupPassword'), e = document.getElementById('signupEye');
+  p.type = p.type === 'password' ? 'text' : 'password';
+  e.className = p.type === 'password' ? 'fa-solid fa-eye text-xs' : 'fa-solid fa-eye-slash text-xs';
 }
-function handleSignup(e){
-e.preventDefault();
 
-const name = document.getElementById('fullname').value.trim().replace(/\s+/g, ' ');
-const age = Number(document.getElementById('age').value);
-const email = document.getElementById('email').value.trim();
-const phone = document.getElementById('phone').value.trim();
-const blood = document.getElementById('blood').value;
-const emergency = document.getElementById('emergency').value.trim();
-const history = document.getElementById('history').value.trim();
-const password = document.getElementById('signupPassword').value;
+async function handleSignup(e){
+  e.preventDefault();
 
-if (!/^[A-Za-z\s]{2,50}$/.test(name)) {
+  const name = document.getElementById('fullname').value.trim().replace(/\s+/g, ' ');
+  const age = Number(document.getElementById('age').value);
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const blood = document.getElementById('blood').value;
+  const emergency = document.getElementById('emergency').value.trim();
+  const history = document.getElementById('history').value.trim();
+  const password = document.getElementById('signupPassword').value;
+
+  if (!/^[A-Za-z\s]{2,50}$/.test(name)) {
     alert("Full Name must contain only letters and spaces (2–50 characters).");
     return;
-}
-if (!Number.isInteger(age) || age < 15 || age > 120) {
+  }
+  if (!Number.isInteger(age) || age < 15 || age > 120) {
     alert("Please enter a valid whole age between 15 and 120.");
     return;
-}
-if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     alert("Please enter a valid email address.");
     return;
-}
-if (!/^[6-9]\d{9}$/.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+  }
+  if (!/^[6-9]\d{9}$/.test(phone) || /^(\d)\1{9}$/.test(phone)) {
     alert("Please enter a valid 10-digit mobile number.");
     return;
-}
-if (!blood || blood === "Unknown") {
+  }
+  if (!blood || blood === "Unknown") {
     alert("Please select your blood group.");
     return;
-}
-if (!/^[6-9]\d{9}$/.test(emergency) || /^(\d)\1{9}$/.test(emergency)) {
+  }
+  if (!/^[6-9]\d{9}$/.test(emergency) || /^(\d)\1{9}$/.test(emergency)) {
     alert("Please enter a valid 10-digit emergency contact number.");
     return;
-}
-if (phone === emergency) {
+  }
+  if (phone === emergency) {
     alert("Phone number and Emergency contact number cannot be the same.");
     return;
-}
-if (history && (!/[A-Za-z]{2,}/.test(history) || history.length < 3)) {
+  }
+  if (history && (!/[A-Za-z]{2,}/.test(history) || history.length < 3)) {
     alert("Please enter valid medical history/allergies in words (e.g., Asthma, None), or leave it blank.");
     return;
-}
-if (password.length < 6) {
+  }
+  if (password.length < 6) {
     alert("Password must be at least 6 characters long.");
     return;
-}
+  }
 
-const profile={
-name:name,
-email:email,
-age:age,
-phone:phone,
-blood:blood,
-emergency:emergency,
-history:history || "None"
-};
-localStorage.setItem('mydoctorg_profile',JSON.stringify(profile));
-window.location.href="New.html";
+  const btn = e.target.querySelector('button[type="submit"]');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+  }
+
+  const profile = {
+    name: name,
+    email: email,
+    age: age,
+    phone: phone,
+    blood: blood,
+    emergency: emergency,
+    history: history || "None"
+  };
+  localStorage.setItem('mydoctorg_profile', JSON.stringify(profile));
+
+  try {
+    await fetch('/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email })
+    });
+  } catch (err) {
+    console.error('Notification error:', err);
+  }
+
+  window.location.href = "New.html";
 }
 </script>
 </body>
